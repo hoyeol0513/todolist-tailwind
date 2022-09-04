@@ -12,7 +12,7 @@ function App() {
       {
         id : 2,
         content : "밥먹기",
-        checked : false
+        checked : true
       },
       {
         id : 3,
