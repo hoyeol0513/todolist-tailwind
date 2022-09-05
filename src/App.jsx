@@ -24,7 +24,7 @@ function App() {
     return (
         <div className="max-w-4xl m-auto mt-4">
             <Todoinput todos={todos} nextId={nextId} setTodos={setTodos} />
-            <TodoList todos={todos}/>
+            <TodoList todos={todos} setTodos={setTodos}/>
         </div>
     );
 }
