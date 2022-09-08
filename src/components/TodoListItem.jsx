@@ -8,21 +8,35 @@ const TodoListItem = ({todo, setTodos, index}) => {
         <tr>
             <th>{index + 1}</th>
             <td>{content}</td>
+            {/* div는 td를 감싸면 안됨. div의 자식으로 td 안됨. */}
             <td>
-              <div onClick={()=>{alert("체크 클릭됨")}}>
-                <div>{checked ?  <MdCheckBox /> : <MdCheckBoxOutlineBlank />}</div>
+              <div onClick={async()=>{
+                //front에서만 바뀌는 로직
+                //todos 배열을 돌면서 id값이 같으면 checked를 반전, 아니면 그냥 기존 유지
+                
+                // setTodos( (todos) => todos.map((todo, index) =>
+                //   todo.id === id ? {...todo, checked : !todo.checked} : todo 
+                //   )
+                // );
+                const data = await axios({
+                  url: `http://localhost:8083/todos/${id}`,
+                  method : "PATCH"
+                })
+                setTodos(data.data);
+              }}>
+                {checked ?  <MdCheckBox /> : <MdCheckBoxOutlineBlank />}
               </div>
-
             </td>
             <td className='edit'>
-              <MdModeEditOutline />
+              <div>
+                <MdModeEditOutline />
+              </div>
             </td>
             <td className='remove'>
               {/* 삭제방법 
               1. 바로 벡으로 날려서 삭제 
               2. 자바스크립트 내부 배열을 이용한 후 삭제 */}
               <div onClick={async() =>{
-                alert(id);
                 //자바스크립트 내부에서 삭제 방법 => filter함수 (해당 조건만 남기는 자바스크립트 함수)
                 //클릭한 것의 아이디와 다른 것만 남김 (=> 같은 건 삭제)
                 //setTodos(todos => todos.filter((todo) => todo.id !== id))
